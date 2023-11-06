@@ -54,7 +54,7 @@ interface FileTraverser {
     fun traverse(source: File, target: File)
 }
 
-class PageTraverser() : FileTraverser {
+class PageTraverser : FileTraverser {
     override fun newName(oldName: File): String = oldName.nameWithoutExtension + ".html"
 
     override fun shouldTraverse(file: File): Boolean = file.extension == "md"

@@ -19,7 +19,7 @@ class FileTraverserTest {
 
     @Test
     fun `should traverse files`() {
-        val sourceFile = sourceDir.resolve("source.txt").writeText("Hello World!")
+        sourceDir.resolve("source.txt").writeText("Hello World!")
         val traverser = FileTree(sourceDir, targetDir, object : FileTraverser {
             override fun newName(oldName: File): String =
                 oldName.nameWithoutExtension.reversed() + "." + oldName.extension
@@ -29,7 +29,8 @@ class FileTraverserTest {
             override fun traverse(source: File, target: File) {
                 target.writeText(source.readText().reversed())
             }
-        }).walk()
+        })
+        traverser.walk()
         val targetFile = targetDir.resolve("ecruos.txt")
         assertThat(targetFile, FileMatchers.anExistingFile())
         assertThat(targetFile.readText(), equalTo("!dlroW olleH"))
@@ -38,7 +39,7 @@ class FileTraverserTest {
     @Test
     fun `should traverse files in subdirs`() {
         val subdir = sourceDir.resolve("subdir").apply { mkdirs() }
-        val sourceFile = subdir.resolve("source.txt").writeText("Hello World!")
+       subdir.resolve("source.txt").writeText("Hello World!")
         val traverser = FileTree(sourceDir, targetDir, object : FileTraverser {
             override fun newName(oldName: File): String =
                 oldName.nameWithoutExtension.reversed() + "." + oldName.extension
@@ -48,7 +49,8 @@ class FileTraverserTest {
             override fun traverse(source: File, target: File) {
                 target.writeText(source.readText().reversed())
             }
-        }).walk()
+        })
+        traverser.walk()
         val targetFile = targetDir.resolve("subdir/ecruos.txt")
         assertThat(targetFile, FileMatchers.anExistingFile())
         assertThat(targetFile.readText(), equalTo("!dlroW olleH"))
