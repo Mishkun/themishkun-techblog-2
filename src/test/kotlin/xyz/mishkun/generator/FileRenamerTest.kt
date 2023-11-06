@@ -3,7 +3,6 @@ package xyz.mishkun.generator
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.startsWith
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.io.FileMatchers
 import org.hamcrest.io.FileMatchers.aFileNamed
 import org.hamcrest.io.FileMatchers.aFileWithAbsolutePath
 import org.junit.jupiter.api.Test
@@ -21,7 +20,7 @@ class FileRenamerTest {
     }
 
     @Test
-    fun `should rename a file inside a directory` () {
+    fun `should rename a file inside a directory`() {
         val subdir = File("subdir")
         val file = subdir.resolve("source.txt")
         val renamer = FileRenamer { oldFile -> oldFile.nameWithoutExtension.reversed() + "." + oldFile.extension }

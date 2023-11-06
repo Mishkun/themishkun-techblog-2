@@ -5,7 +5,6 @@ import com.github.ajalt.clikt.parameters.arguments.argument
 import com.github.ajalt.clikt.parameters.types.file
 import kotlinx.html.head
 import kotlinx.html.html
-import kotlinx.html.meta
 import kotlinx.html.stream.createHTML
 import kotlinx.html.title
 import kotlinx.html.unsafe
@@ -55,7 +54,7 @@ interface FileTraverser {
     fun traverse(source: File, target: File)
 }
 
-class PageTraverser(): FileTraverser {
+class PageTraverser() : FileTraverser {
     override fun newName(oldName: File): String = oldName.nameWithoutExtension + ".html"
 
     override fun shouldTraverse(file: File): Boolean = file.extension == "md"
@@ -77,7 +76,7 @@ class PageTraverser(): FileTraverser {
     }
 }
 
-class Generator: CliktCommand() {
+class Generator : CliktCommand() {
     val sourcesDir by argument(help = "Directory with markdown files").file(mustExist = true, mustBeReadable = true)
     val targetDir by argument(help = "Directory where to put generated html files").file()
     override fun run() {

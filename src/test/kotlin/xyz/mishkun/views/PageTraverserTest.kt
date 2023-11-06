@@ -4,7 +4,6 @@ import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
-import org.xmlunit.matchers.CompareMatcher
 import org.xmlunit.matchers.CompareMatcher.isIdenticalTo
 import xyz.mishkun.PageTraverser
 import java.io.File
@@ -39,17 +38,20 @@ class PageTraverserTest {
     @Test
     fun `should render a complete html page`() {
         val source = sourceDir.resolve("source.md").apply {
-            writeText("""
+            writeText(
+                """
             # Hello World!
             
             This is a blank page
-        """.trimIndent())
+        """.trimIndent()
+            )
         }
         val traverser = PageTraverser()
         val target = sourceDir.resolve("source.html")
         traverser.traverse(source, target)
-        assertThat(target.readText(), isIdenticalTo(
-            """
+        assertThat(
+            target.readText(), isIdenticalTo(
+                """
             <html>
             <head>
             <meta charset="UTF-8"/>
@@ -61,6 +63,7 @@ class PageTraverserTest {
             </body>
             </html>
         """.trimIndent()
-        ).ignoreWhitespace())
+            ).ignoreWhitespace()
+        )
     }
 }

@@ -20,8 +20,9 @@ class FileTraverserTest {
     @Test
     fun `should traverse files`() {
         val sourceFile = sourceDir.resolve("source.txt").writeText("Hello World!")
-        val traverser = FileTree(sourceDir, targetDir, object: FileTraverser {
-            override fun newName(oldName: File): String = oldName.nameWithoutExtension.reversed() + "." + oldName.extension
+        val traverser = FileTree(sourceDir, targetDir, object : FileTraverser {
+            override fun newName(oldName: File): String =
+                oldName.nameWithoutExtension.reversed() + "." + oldName.extension
 
             override fun shouldTraverse(file: File): Boolean = file.isFile
 
@@ -38,8 +39,9 @@ class FileTraverserTest {
     fun `should traverse files in subdirs`() {
         val subdir = sourceDir.resolve("subdir").apply { mkdirs() }
         val sourceFile = subdir.resolve("source.txt").writeText("Hello World!")
-        val traverser = FileTree(sourceDir, targetDir, object: FileTraverser {
-            override fun newName(oldName: File): String = oldName.nameWithoutExtension.reversed() + "." + oldName.extension
+        val traverser = FileTree(sourceDir, targetDir, object : FileTraverser {
+            override fun newName(oldName: File): String =
+                oldName.nameWithoutExtension.reversed() + "." + oldName.extension
 
             override fun shouldTraverse(file: File): Boolean = file.isFile
 

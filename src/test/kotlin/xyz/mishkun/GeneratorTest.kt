@@ -1,8 +1,6 @@
 package xyz.mishkun
 
 import com.github.ajalt.clikt.testing.test
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
@@ -25,7 +23,9 @@ class GeneratorTest {
         generateSimpleSourceDirectoryStructure()
         val generator = Generator()
         generator.test("${sourcesDir.absolutePath} ${targetDir.absolutePath}")
-        assertThat(targetDir.resolve("index.html").readText(), isIdenticalTo("""
+        assertThat(
+            targetDir.resolve("index.html").readText(), isIdenticalTo(
+                """
             <html>
             <head>
             <meta charset="UTF-8"/>
@@ -36,16 +36,20 @@ class GeneratorTest {
             <p>This is a blank page</p>
             </body>
             </html>
-        """.trimIndent()).ignoreWhitespace())
+        """.trimIndent()
+            ).ignoreWhitespace()
+        )
     }
 
     private fun generateSimpleSourceDirectoryStructure(): File {
         val sourcesDir = sourcesDir.apply { mkdir() }
-        sourcesDir.resolve("index.md").writeText("""
+        sourcesDir.resolve("index.md").writeText(
+            """
             # Hello World!
             
             This is a blank page
-        """.trimIndent())
+        """.trimIndent()
+        )
         return sourcesDir
     }
 }
