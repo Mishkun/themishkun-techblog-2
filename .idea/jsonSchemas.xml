@@ -14,9 +14,6 @@
                   <Item>
                     <option name="path" value=".github/worflows/deploy.yml" />
                   </Item>
-                  <Item>
-                    <option name="path" value=".github/workflows/deploy.yml" />
-                  </Item>
                 </list>
               </option>
             </SchemaInfo>
