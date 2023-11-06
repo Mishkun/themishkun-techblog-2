@@ -24,7 +24,7 @@ class GeneratorTest {
         val generator = Generator()
         generator.test("${sourcesDir.absolutePath} ${targetDir.absolutePath}")
         assertThat(
-            targetDir.resolve("index.html").readText(), isIdenticalTo(
+            targetDir.resolve("subdir/helloworld.html").readText(), isIdenticalTo(
                 """
             <html>
             <head>
@@ -41,9 +41,34 @@ class GeneratorTest {
         )
     }
 
+    @Test
+    fun `should generate index page`() {
+        generateSimpleSourceDirectoryStructure()
+        val generator = Generator()
+        generator.test("${sourcesDir.absolutePath} ${targetDir.absolutePath}")
+        assertThat(
+            targetDir.resolve("index.html").readText(), isIdenticalTo(
+                """
+            <html>
+            <head>
+            <meta charset="UTF-8"/>
+            <title>My Site</title>
+            </head>
+            <body>
+            <h1>Welcome to my site!</h1>
+            <ul>
+                <li><a href="subdir/helloworld.html">Hello World!</a></li>
+            </ul>
+            </body>
+            </html>
+        """.trimIndent()
+            ).ignoreWhitespace()
+        )
+    }
+
     private fun generateSimpleSourceDirectoryStructure(): File {
-        val sourcesDir = sourcesDir.apply { mkdir() }
-        sourcesDir.resolve("index.md").writeText(
+        val sourcesDir = sourcesDir.resolve("subdir").apply { mkdirs() }
+        sourcesDir.resolve("helloworld.md").writeText(
             """
             # Hello World!
             
