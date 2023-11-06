@@ -1,10 +1,15 @@
 plugins {
     kotlin("jvm") version "1.9.20"
     id("io.gitlab.arturbosch.detekt") version "1.23.3"
+    application
 }
 
 group = "xyz.mishkun"
 version = "1.0-SNAPSHOT"
+
+application {
+    mainClass = "xyz.mishkun.MainKt"
+}
 
 repositories {
     mavenCentral()
@@ -26,4 +31,16 @@ tasks.test {
 
 kotlin {
     jvmToolchain(8)
+}
+
+tasks.named<JavaExec>("run") {
+    inputs.dir("blog").withPropertyName("blogSourceDir")
+    outputs.dir("docs").withPropertyName("outputDir")
+    args("blog", "docs")
+}
+
+tasks.clean.configure {
+    doLast {
+        file("docs").deleteRecursively()
+    }
 }
