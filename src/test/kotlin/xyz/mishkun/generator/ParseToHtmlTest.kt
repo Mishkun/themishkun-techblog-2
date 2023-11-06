@@ -3,7 +3,7 @@ package xyz.mishkun.generator
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.jupiter.api.Test
 import org.xmlunit.matchers.CompareMatcher.isSimilarTo
-import xyz.mishkun.MarkdownToHtmlConverter
+import xyz.mishkun.views.MarkdownToHtmlConverter
 
 class ParseToHtmlTest {
 

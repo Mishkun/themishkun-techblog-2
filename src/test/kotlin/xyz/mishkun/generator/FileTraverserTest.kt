@@ -5,8 +5,8 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.io.FileMatchers
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
-import xyz.mishkun.FileTraverser
-import xyz.mishkun.FileTree
+import xyz.mishkun.parser.FileTraverser
+import xyz.mishkun.parser.FileTree
 import java.io.File
 
 class FileTraverserTest {
