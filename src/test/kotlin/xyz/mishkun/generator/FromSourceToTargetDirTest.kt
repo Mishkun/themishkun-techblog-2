@@ -5,7 +5,7 @@ import org.hamcrest.CoreMatchers.startsWith
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.io.FileMatchers
 import org.junit.jupiter.api.Test
-import xyz.mishkun.FromSourceToTarget
+import xyz.mishkun.parser.FromSourceToTarget
 import java.io.File
 
 class FromSourceToTargetDirTest {

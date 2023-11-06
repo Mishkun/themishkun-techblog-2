@@ -6,7 +6,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.io.FileMatchers.aFileNamed
 import org.hamcrest.io.FileMatchers.aFileWithAbsolutePath
 import org.junit.jupiter.api.Test
-import xyz.mishkun.FileRenamer
+import xyz.mishkun.parser.FileRenamer
 import java.io.File
 
 class FileRenamerTest {

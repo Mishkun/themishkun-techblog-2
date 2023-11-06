@@ -5,7 +5,6 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import org.xmlunit.matchers.CompareMatcher.isIdenticalTo
-import xyz.mishkun.PageTraverser
 import java.io.File
 
 class PageTraverserTest {
