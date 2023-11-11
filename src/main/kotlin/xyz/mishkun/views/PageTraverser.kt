@@ -2,6 +2,7 @@ package xyz.mishkun.views
 
 import kotlinx.html.head
 import kotlinx.html.html
+import kotlinx.html.meta
 import kotlinx.html.stream.createHTML
 import kotlinx.html.title
 import kotlinx.html.unsafe
@@ -17,11 +18,9 @@ class PageTraverser : FileTraverser {
         target.writeText(render(source.readText()))
     }
 
-    private fun render(source: String): String = createHTML(prettyPrint = false).html {
+    private fun render(source: String): String = createHTML(prettyPrint = false, xhtmlCompatible = true).html {
         head {
-            unsafe {
-                +"""<meta charset="UTF-8"/>"""
-            }
+            meta { charset = "UTF-8" }
             title { +"My Site" }
         }
         unsafe {
