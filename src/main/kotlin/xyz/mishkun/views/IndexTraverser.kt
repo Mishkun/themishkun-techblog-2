@@ -18,10 +18,8 @@ class IndexTraverser: FileTraverser {
     val index = mutableListOf<String>()
     override fun shouldTraverse(file: File): Boolean = file.extension == "md"
 
-    override fun newName(oldName: File): String = oldName.name
-
-    override fun traverse(source: File, target: File) {
-        index += source.nameWithoutExtension
+    override fun traverse(file: File) {
+        index += file.nameWithoutExtension
     }
 
     fun dumpIndex(target: File) = createHTML(xhtmlCompatible = true).html{

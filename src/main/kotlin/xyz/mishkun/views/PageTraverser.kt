@@ -6,15 +6,15 @@ import kotlinx.html.meta
 import kotlinx.html.stream.createHTML
 import kotlinx.html.title
 import kotlinx.html.unsafe
-import xyz.mishkun.parser.FileTraverser
+import xyz.mishkun.parser.CopyAndModifyTraverser
 import java.io.File
 
-class PageTraverser : FileTraverser {
-    override fun newName(oldName: File): String = oldName.nameWithoutExtension + ".html"
+class PageTraverser(sourceDir: File, targetDir: File) : CopyAndModifyTraverser(sourceDir, targetDir) {
+    override fun newName(source: File): String = source.nameWithoutExtension + ".html"
 
     override fun shouldTraverse(file: File): Boolean = file.extension == "md"
 
-    override fun traverse(source: File, target: File) {
+    override fun modify(source: File, target: File) {
         target.writeText(render(source.readText()))
     }
 

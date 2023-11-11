@@ -21,16 +21,11 @@ class IndexTraverserTest {
         assertThat(traverser.shouldTraverse(File("other/file")), equalTo(false))
     }
 
-    @Test
-    fun `should not rename files`() {
-        val traverser = IndexTraverser()
-        assertThat(traverser.newName(File("pages/someFile")), equalTo("someFile"))
-    }
 
     @Test
     fun `should generate index page`() {
         val traverser = IndexTraverser()
-        traverser.traverse(File("someFile.md"), File("blog/someFile.md"))
+        traverser.traverse(File("someFile.md"))
         traverser.dumpIndex(File("index.html"))
         assertThat(
             File("index.html").readText(), isIdenticalTo(
