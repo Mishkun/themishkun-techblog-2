@@ -4,6 +4,7 @@ import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.arguments.argument
 import com.github.ajalt.clikt.parameters.types.file
 import xyz.mishkun.parser.FileTree
+import xyz.mishkun.views.IndexTraverser
 import xyz.mishkun.views.PageTraverser
 
 class Generator : CliktCommand() {
@@ -11,6 +12,8 @@ class Generator : CliktCommand() {
     val targetDir by argument(help = "Directory where to put generated html files").file()
     override fun run() {
         echo("Generating site from $sourcesDir to $targetDir")
-        FileTree(sourcesDir, targetDir, PageTraverser()).walk()
+        val indexTraverser = IndexTraverser(sourcesDir)
+        FileTree(sourcesDir, PageTraverser(sourcesDir, targetDir), indexTraverser).walk()
+        indexTraverser.dumpIndex(targetDir.resolve("index.html"))
     }
 }

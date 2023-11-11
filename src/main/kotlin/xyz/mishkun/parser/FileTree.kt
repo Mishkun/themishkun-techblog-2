@@ -4,17 +4,14 @@ import java.io.File
 
 class FileTree(
     private val sourceDir: File,
-    private val targetDir: File,
-    private val traverser: FileTraverser
+    private vararg val traversers: FileTraverser
 ) {
     fun walk() {
-        sourceDir.walk().forEach { source ->
-            if (traverser.shouldTraverse(source)) {
-                val target = FromSourceToTarget(sourceDir, targetDir).convert(source)
-                    .let { FileRenamer(traverser::newName).rename(it) }
-                target.parentFile?.mkdirs()
-                println("Converting $source to $target")
-                traverser.traverse(source, target)
+        for (source in sourceDir.walk()) {
+            for (traverser in traversers) {
+                if (traverser.shouldTraverse(source)) {
+                    traverser.traverse(source)
+                }
             }
         }
     }

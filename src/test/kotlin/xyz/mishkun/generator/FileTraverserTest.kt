@@ -20,39 +20,44 @@ class FileTraverserTest {
     @Test
     fun `should traverse files`() {
         sourceDir.resolve("source.txt").writeText("Hello World!")
-        val traverser = FileTree(sourceDir, targetDir, object : FileTraverser {
-            override fun newName(oldName: File): String =
-                oldName.nameWithoutExtension.reversed() + "." + oldName.extension
-
+        val targetFile = targetDir.resolve("ecruos.txt")
+        val traverser = FileTree(sourceDir, object : FileTraverser {
             override fun shouldTraverse(file: File): Boolean = file.isFile
 
-            override fun traverse(source: File, target: File) {
-                target.writeText(source.readText().reversed())
+            override fun traverse(file: File) {
+                targetFile.writeText(file.readText().reversed())
             }
         })
         traverser.walk()
-        val targetFile = targetDir.resolve("ecruos.txt")
         assertThat(targetFile, FileMatchers.anExistingFile())
         assertThat(targetFile.readText(), equalTo("!dlroW olleH"))
     }
 
+
     @Test
-    fun `should traverse files in subdirs`() {
-        val subdir = sourceDir.resolve("subdir").apply { mkdirs() }
-       subdir.resolve("source.txt").writeText("Hello World!")
-        val traverser = FileTree(sourceDir, targetDir, object : FileTraverser {
-            override fun newName(oldName: File): String =
-                oldName.nameWithoutExtension.reversed() + "." + oldName.extension
+    fun `should do multiple traversals`() {
+        sourceDir.resolve("source.txt").writeText("Hello World!")
+        val targetFile = targetDir.resolve("ecruos.txt")
+        val targetFile2 = targetDir.resolve("source_copy.txt")
+        val traverser = FileTree(sourceDir, object : FileTraverser {
 
             override fun shouldTraverse(file: File): Boolean = file.isFile
 
-            override fun traverse(source: File, target: File) {
-                target.writeText(source.readText().reversed())
+            override fun traverse(file: File) {
+                targetFile.writeText(file.readText().reversed())
+            }
+        }, object : FileTraverser {
+
+            override fun shouldTraverse(file: File): Boolean = file.isFile
+
+            override fun traverse(file: File) {
+                targetFile2.writeText(file.readText())
             }
         })
         traverser.walk()
-        val targetFile = targetDir.resolve("subdir/ecruos.txt")
         assertThat(targetFile, FileMatchers.anExistingFile())
         assertThat(targetFile.readText(), equalTo("!dlroW olleH"))
+        assertThat(targetFile2, FileMatchers.anExistingFile())
+        assertThat(targetFile2.readText(), equalTo("Hello World!"))
     }
 }
