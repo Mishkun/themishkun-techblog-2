@@ -12,7 +12,7 @@ class Generator : CliktCommand() {
     val targetDir by argument(help = "Directory where to put generated html files").file()
     override fun run() {
         echo("Generating site from $sourcesDir to $targetDir")
-        val indexTraverser = IndexTraverser()
+        val indexTraverser = IndexTraverser(sourcesDir)
         FileTree(sourcesDir, PageTraverser(sourcesDir, targetDir), indexTraverser).walk()
         indexTraverser.dumpIndex(targetDir.resolve("index.html"))
     }

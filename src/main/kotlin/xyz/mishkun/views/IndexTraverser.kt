@@ -11,15 +11,16 @@ import kotlinx.html.stream.createHTML
 import kotlinx.html.title
 import kotlinx.html.ul
 import xyz.mishkun.parser.FileTraverser
+import xyz.mishkun.utils.pathWithoutExtension
 import java.io.File
 
-class IndexTraverser: FileTraverser {
+class IndexTraverser(val sourceDir: File): FileTraverser {
 
     val index = mutableListOf<String>()
     override fun shouldTraverse(file: File): Boolean = file.extension == "md"
 
     override fun traverse(file: File) {
-        index += file.nameWithoutExtension
+        index += file.relativeTo(sourceDir).pathWithoutExtension()
     }
 
     fun dumpIndex(target: File) = createHTML(xhtmlCompatible = true).html{
@@ -32,7 +33,7 @@ class IndexTraverser: FileTraverser {
             ul {
                 index.forEach {
                     li {
-                        a(href = "blog/$it.html") { +it }
+                        a(href = "$it.html") { +it.substringAfterLast("/") }
                     }
                 }
             }

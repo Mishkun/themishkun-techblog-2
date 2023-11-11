@@ -57,7 +57,7 @@ class GeneratorTest {
             <body>
             <h1>Welcome to my site!</h1>
             <ul>
-                <li><a href="blog/helloworld.html">helloworld</a></li>
+                <li><a href="subdir/helloworld.html">helloworld</a></li>
             </ul>
             </body>
             </html>
