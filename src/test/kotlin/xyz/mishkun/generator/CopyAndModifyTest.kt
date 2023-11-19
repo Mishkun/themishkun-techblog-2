@@ -27,8 +27,6 @@ class CopyAndModifyTest {
             }
 
             override fun newName(source: File): String = source.nameWithoutExtension + ".txt"
-
-            override fun shouldTraverse(file: File): Boolean = file.isFile
         }
         traverser.traverse(source)
         val targetFile = targetDir.resolve("subdir").resolve("source.txt")
@@ -45,8 +43,6 @@ class CopyAndModifyTest {
             }
 
             override fun newName(source: File): String = source.nameWithoutExtension + ".txt"
-
-            override fun shouldTraverse(file: File): Boolean = file.isFile
         }
         traverser.traverse(source)
         val targetFile = targetDir.resolve("source.txt")
