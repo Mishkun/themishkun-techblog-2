@@ -3,6 +3,7 @@ package xyz.mishkun
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.arguments.argument
 import com.github.ajalt.clikt.parameters.types.file
+import xyz.mishkun.parser.FromSourceToTarget
 import xyz.mishkun.parser.walk
 import xyz.mishkun.views.CopyTraverser
 import xyz.mishkun.views.IndexTraverser
@@ -31,7 +32,7 @@ class Generator : CliktCommand() {
     }
 
     private fun generatePages() {
-        PageTraverser(sourcesDir, targetDir).walk(sourcesDir)
+        PageTraverser(FromSourceToTarget(sourcesDir, targetDir)).walk(sourcesDir)
     }
 
     private fun cleanTargetDir(targetDir: File) {

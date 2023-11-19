@@ -5,6 +5,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import org.xmlunit.matchers.CompareMatcher.isIdenticalTo
+import xyz.mishkun.parser.FromSourceToTarget
 import java.io.File
 
 class PageTraverserTest {
@@ -15,7 +16,7 @@ class PageTraverserTest {
     @Test
     fun `should rename file to html`() {
         val source = File("source.md")
-        val traverser = PageTraverser(File("someDir"), File("someDir"))
+        val traverser = PageTraverser(FromSourceToTarget(File("someDir"),File("someDir")))
         val target = traverser.newName(source)
         assertThat(target, equalTo("source.html"))
     }
@@ -31,7 +32,7 @@ class PageTraverserTest {
         """.trimIndent()
             )
         }
-        val traverser = PageTraverser(sourceDir, sourceDir)
+        val traverser = PageTraverser(FromSourceToTarget(sourceDir, sourceDir))
         val target = sourceDir.resolve("source.html")
         traverser.traverse(source)
         assertThat(
