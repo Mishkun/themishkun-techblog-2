@@ -59,5 +59,4 @@ class FileTraverserTest {
         assertThat(targetFile2, FileMatchers.anExistingFile())
         assertThat(targetFile2.readText(), equalTo("Hello World!"))
     }
-
 }

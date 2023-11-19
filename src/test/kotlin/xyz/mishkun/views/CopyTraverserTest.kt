@@ -12,6 +12,7 @@ class CopyTraverserTest {
 
     @field:TempDir
     lateinit var sourceDir: File
+
     @field:TempDir
     lateinit var targetDir: File
 
