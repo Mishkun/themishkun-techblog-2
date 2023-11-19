@@ -6,6 +6,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.io.FileMatchers.anExistingFile
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
+import xyz.mishkun.parser.FromSourceToTarget
 import java.io.File
 
 class CopyTraverserTest {
@@ -18,7 +19,7 @@ class CopyTraverserTest {
 
     @Test
     fun `should copy files to target dir`() {
-        val traverser = CopyTraverser(sourceDir, targetDir)
+        val traverser = CopyTraverser(FromSourceToTarget(sourceDir, targetDir))
         sourceDir.resolve("someFile.bin").writeBytes(byteArrayOf(1, 2, 3, 4, 5))
         traverser.traverse(sourceDir.resolve("someFile.bin"))
         assertThat(targetDir.resolve("someFile.bin"), anExistingFile())
@@ -27,7 +28,7 @@ class CopyTraverserTest {
 
     @Test
     fun `should ignore md files`() {
-        val traverser = CopyTraverser(sourceDir, targetDir)
+        val traverser = CopyTraverser(FromSourceToTarget(sourceDir, targetDir))
         sourceDir.resolve("someFile.md").writeText("Hello World!")
         traverser.traverse(sourceDir.resolve("someFile.md"))
         assertThat(targetDir.resolve("someFile.md"), not(anExistingFile()))

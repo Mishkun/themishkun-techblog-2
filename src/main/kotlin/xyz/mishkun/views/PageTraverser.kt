@@ -7,9 +7,10 @@ import kotlinx.html.stream.createHTML
 import kotlinx.html.title
 import kotlinx.html.unsafe
 import xyz.mishkun.parser.CopyAndModifyTraverser
+import xyz.mishkun.parser.FromSourceToTarget
 import java.io.File
 
-class PageTraverser(sourceDir: File, targetDir: File) : CopyAndModifyTraverser(sourceDir, targetDir) {
+class PageTraverser(fromSourceToTarget: FromSourceToTarget) : CopyAndModifyTraverser(fromSourceToTarget) {
     override fun newName(source: File): String = source.nameWithoutExtension + ".html"
 
     override fun modify(source: File, target: File) {

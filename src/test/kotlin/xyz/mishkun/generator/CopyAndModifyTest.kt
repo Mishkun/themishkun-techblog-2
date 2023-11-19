@@ -6,6 +6,7 @@ import org.hamcrest.io.FileMatchers.anExistingFile
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import xyz.mishkun.parser.CopyAndModifyTraverser
+import xyz.mishkun.parser.FromSourceToTarget
 import java.io.File
 
 class CopyAndModifyTest {
@@ -21,7 +22,7 @@ class CopyAndModifyTest {
         val source = sourceDir.resolve("subdir").apply { mkdirs() }.resolve("source.txt").apply {
             writeText("Hello World!")
         }
-        val traverser = object : CopyAndModifyTraverser(sourceDir, targetDir) {
+        val traverser = object : CopyAndModifyTraverser(FromSourceToTarget(sourceDir, targetDir)) {
             override fun modify(source: File, target: File) {
                 target.writeText(source.readText().reversed())
             }
@@ -37,7 +38,7 @@ class CopyAndModifyTest {
     @Test
     fun `should copy`() {
         val source = sourceDir.resolve("source.txt").apply { writeText("Hello World!") }
-        val traverser = object : CopyAndModifyTraverser(sourceDir, targetDir) {
+        val traverser = object : CopyAndModifyTraverser(FromSourceToTarget(sourceDir, targetDir)) {
             override fun modify(source: File, target: File) {
                 target.writeText(source.readText().reversed())
             }

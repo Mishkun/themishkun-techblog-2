@@ -14,8 +14,8 @@ class IndexTraverserTest {
     @Test
     fun `should generate index page`() {
         val traverser = IndexTraverser(sourceDir)
-        traverser.traverse(sourceDir.resolve("someFile1.md"))
-        traverser.traverse(sourceDir.resolve("pages/someOtherFile.md"))
+        traverser.traverse(sourceDir.resolve("someFile1.html"))
+        traverser.traverse(sourceDir.resolve("pages/someOtherFile.html"))
         traverser.dumpIndex(sourceDir.resolve("index.html"))
         assertThat(
             sourceDir.resolve("index.html").readText(), isIdenticalTo(

@@ -6,7 +6,7 @@ import org.hamcrest.io.FileMatchers
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import xyz.mishkun.parser.FileTraverser
-import xyz.mishkun.parser.FileTree
+import xyz.mishkun.parser.walk
 import java.io.File
 
 class FileTraverserTest {
@@ -21,42 +21,15 @@ class FileTraverserTest {
     fun `should traverse files`() {
         sourceDir.resolve("source.txt").writeText("Hello World!")
         val targetFile = targetDir.resolve("ecruos.txt")
-        val traverser = FileTree(sourceDir, object : FileTraverser {
+        val traverser = object : FileTraverser {
             override fun traverse(file: File) {
                 if (file.isFile) {
                     targetFile.writeText(file.readText().reversed())
                 }
             }
-        })
-        traverser.walk()
+        }
+        traverser.walk(sourceDir)
         assertThat(targetFile, FileMatchers.anExistingFile())
         assertThat(targetFile.readText(), equalTo("!dlroW olleH"))
-    }
-
-    @Test
-    fun `should do multiple traversals`() {
-        sourceDir.resolve("source.txt").writeText("Hello World!")
-        val targetFile = targetDir.resolve("ecruos.txt")
-        val targetFile2 = targetDir.resolve("source_copy.txt")
-        val traverser = FileTree(sourceDir, object : FileTraverser {
-
-            override fun traverse(file: File) {
-                if (file.isFile) {
-                    targetFile.writeText(file.readText().reversed())
-                }
-            }
-        }, object : FileTraverser {
-
-            override fun traverse(file: File) {
-                if (file.isFile) {
-                    targetFile2.writeText(file.readText())
-                }
-            }
-        })
-        traverser.walk()
-        assertThat(targetFile, FileMatchers.anExistingFile())
-        assertThat(targetFile.readText(), equalTo("!dlroW olleH"))
-        assertThat(targetFile2, FileMatchers.anExistingFile())
-        assertThat(targetFile2.readText(), equalTo("Hello World!"))
     }
 }
