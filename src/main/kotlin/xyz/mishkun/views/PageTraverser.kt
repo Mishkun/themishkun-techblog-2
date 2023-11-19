@@ -12,10 +12,10 @@ import java.io.File
 class PageTraverser(sourceDir: File, targetDir: File) : CopyAndModifyTraverser(sourceDir, targetDir) {
     override fun newName(source: File): String = source.nameWithoutExtension + ".html"
 
-    override fun shouldTraverse(file: File): Boolean = file.extension == "md"
-
     override fun modify(source: File, target: File) {
-        target.writeText(render(source.readText()))
+        if (source.extension == "md") {
+            target.writeText(render(source.readText()))
+        }
     }
 
     private fun render(source: String): String = createHTML(prettyPrint = false, xhtmlCompatible = true).html {

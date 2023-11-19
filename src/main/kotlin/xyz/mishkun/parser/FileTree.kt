@@ -9,9 +9,7 @@ class FileTree(
     fun walk() {
         for (source in sourceDir.walk()) {
             for (traverser in traversers) {
-                if (traverser.shouldTraverse(source)) {
-                    traverser.traverse(source)
-                }
+                traverser.traverse(source)
             }
         }
     }

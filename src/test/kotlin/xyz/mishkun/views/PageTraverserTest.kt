@@ -21,20 +21,6 @@ class PageTraverserTest {
     }
 
     @Test
-    fun `should react to md files`() {
-        val source = File("source.md")
-        val traverser = PageTraverser(File("someDir"), File("someDir"))
-        assertThat(traverser.shouldTraverse(source), equalTo(true))
-    }
-
-    @Test
-    fun `should not react to not md files`() {
-        val source = File("source.txt")
-        val traverser = PageTraverser(File("someDir"), File("someDir"))
-        assertThat(traverser.shouldTraverse(source), equalTo(false))
-    }
-
-    @Test
     fun `should render a complete html page`() {
         val source = sourceDir.resolve("source.md").apply {
             writeText(

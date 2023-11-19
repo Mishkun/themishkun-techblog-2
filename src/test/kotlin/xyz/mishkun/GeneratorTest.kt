@@ -20,6 +20,7 @@ class GeneratorTest {
 
     @Test
     fun `should generate a blank page`() {
+        println("memory in mb = ${Runtime.getRuntime().maxMemory() / 1024 / 1024}")
         generateSimpleSourceDirectoryStructure()
         val generator = Generator()
         generator.test("${sourcesDir.absolutePath} ${targetDir.absolutePath}")
