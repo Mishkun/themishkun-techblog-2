@@ -14,7 +14,12 @@ class Generator : CliktCommand() {
     override fun run() {
         echo("Generating site from $sourcesDir to $targetDir")
         val indexTraverser = IndexTraverser(sourcesDir)
-        FileTree(sourcesDir, PageTraverser(sourcesDir, targetDir), CopyTraverser(sourcesDir, targetDir), indexTraverser).walk()
+        FileTree(
+            sourcesDir,
+            PageTraverser(sourcesDir, targetDir),
+            CopyTraverser(sourcesDir, targetDir),
+            indexTraverser
+        ).walk()
         indexTraverser.dumpIndex(targetDir.resolve("index.html"))
     }
 }
