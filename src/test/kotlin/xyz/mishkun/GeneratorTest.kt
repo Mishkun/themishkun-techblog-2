@@ -1,6 +1,7 @@
 package xyz.mishkun
 
 import com.github.ajalt.clikt.testing.test
+import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
@@ -65,6 +66,16 @@ class GeneratorTest {
         """.trimIndent()
             ).ignoreWhitespace()
         )
+    }
+
+    @Test
+    fun `should copy attachments`() {
+        val sourcesDir = generateSimpleSourceDirectoryStructure()
+        val attachmentsDir = sourcesDir.resolve("attachments").apply { mkdirs() }
+        attachmentsDir.resolve("attachment.txt").writeText("Hello World!")
+        val generator = Generator()
+        generator.test("${sourcesDir.absolutePath} ${targetDir.absolutePath}")
+        assertThat(targetDir.resolve("subdir/attachment.txt").readText(), equalTo("Hello World!"))
     }
 
     private fun generateSimpleSourceDirectoryStructure(): File {
