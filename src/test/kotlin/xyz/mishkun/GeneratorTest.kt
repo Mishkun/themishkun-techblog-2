@@ -3,6 +3,7 @@ package xyz.mishkun
 import com.github.ajalt.clikt.testing.test
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.io.FileMatchers.anExistingFile
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
@@ -75,7 +76,8 @@ class GeneratorTest {
         attachmentsDir.resolve("attachment.txt").writeText("Hello World!")
         val generator = Generator()
         generator.test("${sourcesDir.absolutePath} ${targetDir.absolutePath}")
-        assertThat(targetDir.resolve("subdir/attachment.txt").readText(), equalTo("Hello World!"))
+        assertThat(targetDir.resolve("attachments/attachment.txt"), anExistingFile())
+        assertThat(targetDir.resolve("attachments/attachment.txt").readText(), equalTo("Hello World!"))
     }
 
     private fun generateSimpleSourceDirectoryStructure(): File {
