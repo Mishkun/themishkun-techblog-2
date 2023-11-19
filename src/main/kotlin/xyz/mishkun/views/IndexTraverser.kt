@@ -14,16 +14,16 @@ import xyz.mishkun.parser.FileTraverser
 import xyz.mishkun.utils.pathWithoutExtension
 import java.io.File
 
-class IndexTraverser(val sourceDir: File): FileTraverser {
+class IndexTraverser(val sourceDir: File) : FileTraverser {
 
     val index = mutableListOf<String>()
-    override fun shouldTraverse(file: File): Boolean = file.extension == "md"
-
     override fun traverse(file: File) {
-        index += file.relativeTo(sourceDir).pathWithoutExtension()
+        if (file.extension == "md") {
+            index += file.relativeTo(sourceDir).pathWithoutExtension()
+        }
     }
 
-    fun dumpIndex(target: File) = createHTML(xhtmlCompatible = true).html{
+    fun dumpIndex(target: File) = createHTML(xhtmlCompatible = true).html {
         head {
             meta { charset = "UTF-8" }
             title { +"My Site" }

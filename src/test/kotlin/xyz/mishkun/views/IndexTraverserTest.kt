@@ -1,6 +1,5 @@
 package xyz.mishkun.views
 
-import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
@@ -11,19 +10,6 @@ class IndexTraverserTest {
 
     @field:TempDir
     lateinit var sourceDir: File
-
-    @Test
-    fun `should traverse any md file inside pages directory`() {
-        val traverser = IndexTraverser(sourceDir)
-        assertThat(traverser.shouldTraverse(File("pages/file.md")), equalTo(true))
-    }
-
-    @Test
-    fun `should not traverse files outside pages directory`() {
-        val traverser = IndexTraverser(sourceDir)
-        assertThat(traverser.shouldTraverse(File("file")), equalTo(false))
-        assertThat(traverser.shouldTraverse(File("other/file")), equalTo(false))
-    }
 
     @Test
     fun `should generate index page`() {

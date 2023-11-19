@@ -22,17 +22,16 @@ class FileTraverserTest {
         sourceDir.resolve("source.txt").writeText("Hello World!")
         val targetFile = targetDir.resolve("ecruos.txt")
         val traverser = FileTree(sourceDir, object : FileTraverser {
-            override fun shouldTraverse(file: File): Boolean = file.isFile
-
             override fun traverse(file: File) {
-                targetFile.writeText(file.readText().reversed())
+                if (file.isFile) {
+                    targetFile.writeText(file.readText().reversed())
+                }
             }
         })
         traverser.walk()
         assertThat(targetFile, FileMatchers.anExistingFile())
         assertThat(targetFile.readText(), equalTo("!dlroW olleH"))
     }
-
 
     @Test
     fun `should do multiple traversals`() {
@@ -41,17 +40,17 @@ class FileTraverserTest {
         val targetFile2 = targetDir.resolve("source_copy.txt")
         val traverser = FileTree(sourceDir, object : FileTraverser {
 
-            override fun shouldTraverse(file: File): Boolean = file.isFile
-
             override fun traverse(file: File) {
-                targetFile.writeText(file.readText().reversed())
+                if (file.isFile) {
+                    targetFile.writeText(file.readText().reversed())
+                }
             }
         }, object : FileTraverser {
 
-            override fun shouldTraverse(file: File): Boolean = file.isFile
-
             override fun traverse(file: File) {
-                targetFile2.writeText(file.readText())
+                if (file.isFile) {
+                    targetFile2.writeText(file.readText())
+                }
             }
         })
         traverser.walk()
