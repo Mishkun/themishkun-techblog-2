@@ -2,6 +2,7 @@ package xyz.mishkun
 
 import com.github.ajalt.clikt.testing.test
 import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.io.FileMatchers.anExistingFile
 import org.junit.jupiter.api.Tag
@@ -22,7 +23,6 @@ class GeneratorTest {
 
     @Test
     fun `should generate a blank page`() {
-        println("memory in mb = ${Runtime.getRuntime().maxMemory() / 1024 / 1024}")
         generateSimpleSourceDirectoryStructure()
         val generator = Generator()
         generator.test("${sourcesDir.absolutePath} ${targetDir.absolutePath}")
@@ -42,6 +42,14 @@ class GeneratorTest {
         """.trimIndent()
             ).ignoreWhitespace()
         )
+    }
+    @Test
+    fun `should clean target dir before copying`() {
+        generateSimpleSourceDirectoryStructure()
+        val generator = Generator()
+        targetDir.resolve("subdir").apply { mkdirs() }.resolve("helloworld.txt").writeText("Hello World!")
+        generator.test("${sourcesDir.absolutePath} ${targetDir.absolutePath}")
+        assertThat(targetDir.resolve("subdir/helloworld.txt"), not(anExistingFile()))
     }
 
     @Test
