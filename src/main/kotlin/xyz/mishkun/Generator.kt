@@ -22,8 +22,8 @@ class Generator : CliktCommand() {
     }
 
     private fun generateIndex() {
-        val indexTraverser = IndexTraverser(sourcesDir)
-        indexTraverser.walk(sourcesDir)
+        val indexTraverser = IndexTraverser(targetDir)
+        indexTraverser.walk(targetDir)
         indexTraverser.dumpIndex(targetDir.resolve("index.html"))
     }
 
