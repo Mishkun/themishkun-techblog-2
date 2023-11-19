@@ -28,7 +28,7 @@ class Generator : CliktCommand() {
     }
 
     private fun copyAttachments() {
-        CopyTraverser(sourcesDir, targetDir).walk(sourcesDir)
+        CopyTraverser(FromSourceToTarget(sourcesDir, targetDir)).walk(sourcesDir)
     }
 
     private fun generatePages() {
