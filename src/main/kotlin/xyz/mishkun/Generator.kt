@@ -3,6 +3,10 @@ package xyz.mishkun
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.arguments.argument
 import com.github.ajalt.clikt.parameters.types.file
+import xyz.mishkun.parser.FileTree
+import xyz.mishkun.views.CopyTraverser
+import xyz.mishkun.views.IndexTraverser
+import xyz.mishkun.views.PageTraverser
 import java.io.File
 
 class Generator : CliktCommand() {
@@ -17,15 +21,17 @@ class Generator : CliktCommand() {
     }
 
     private fun generateIndex() {
-        // TODO("Not yet implemented")
+        val indexTraverser = IndexTraverser(sourcesDir)
+        FileTree(sourcesDir, indexTraverser).walk()
+        indexTraverser.dumpIndex(targetDir.resolve("index.html"))
     }
 
     private fun copyAttachments() {
-        // TODO("Not yet implemented")
+        FileTree(sourcesDir, CopyTraverser(sourcesDir, targetDir)).walk()
     }
 
     private fun generatePages() {
-        // TODO("Not yet implemented")
+        FileTree(sourcesDir, PageTraverser(sourcesDir, targetDir)).walk()
     }
 
     private fun cleanTargetDir(targetDir: File) {
